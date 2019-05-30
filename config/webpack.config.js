@@ -118,6 +118,7 @@ module.exports = function(webpackEnv) {
         ? 'static/js/[name].[contenthash:8].chunk.js'
         : isEnvDevelopment && 'static/js/[name].chunk.js',
       publicPath: publicPath,
+      webassemblyModuleFilename: "[modulehash].wasm",
       devtoolModuleFilenameTemplate: isEnvProduction
         ? info =>
             path
@@ -183,7 +184,7 @@ module.exports = function(webpackEnv) {
       },
       plugins: [
         PnpWebpackPlugin,
-        new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+        // new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
       ],
     },
     resolveLoader: {
@@ -195,7 +196,11 @@ module.exports = function(webpackEnv) {
       strictExportPresence: true,
       rules: [
         { parser: { requireEnsure: false } },
-
+        {
+          test: /\.wasm$/,
+          include: path.resolve(__dirname,'lib','src'),
+          use: [{ loader: require.resolve('wasm-loader'), options: {} }]
+        },
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
           enforce: 'pre',
@@ -311,7 +316,7 @@ module.exports = function(webpackEnv) {
             },
             {
               loader: require.resolve('file-loader'),
-              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+              exclude: [path.resolve(__dirname,'lib'),/\.(js|mjs|jsx|ts|tsx)$/, /\.wasm/,/\.html$/, /\.json$/],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
               },

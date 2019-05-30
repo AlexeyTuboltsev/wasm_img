@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import * as styles from "./App.module.scss"
-import { ImageZone } from "./ImageZone";
+import { ImageZoneLoader } from "./ImageZoneLoader";
 
 export class App extends React.Component {
 
-  initReader = () => {
+  initFileReader = () => {
     const reader = new FileReader();
     reader.onloadstart = () => this.setState({ loading: true })
     reader.onload = (readEvent: any) => this.setState({ loading: false, file: readEvent.target.result })
@@ -17,12 +17,12 @@ export class App extends React.Component {
     file: undefined,
   }
 
-  reader = this.initReader()
+  fileReader = this.initFileReader()
 
   loadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.files && e.target.files[0])
     if (e.target.files && e.target.files[0]) {
-      this.reader.readAsDataURL(e.target.files[0])
+      this.fileReader.readAsDataURL(e.target.files[0])
     }
   }
 
@@ -32,7 +32,9 @@ export class App extends React.Component {
         <input type="file" id="real-input" onChange={(e) => this.loadFile(e)} />
         {this.state.loading.toString()}
         <span className={styles.fileInfo}>Upload a file</span>
-        <ImageZone file={this.state.file} loading={this.state.loading}/>
+        <React.Suspense fallback={<>loading component...</>}>
+          <ImageZoneLoader file={this.state.file} loading={this.state.loading} />
+        </React.Suspense>
       </div>
     )
   }
