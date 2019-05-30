@@ -65,6 +65,6 @@
     "mocha-avoid-only": true
   },
   "linterOptions": {
-    "exclude": ["node_modules/**", "**/*.json"]
+    "exclude": ["node_modules/**", "**/*.json", "@types/**", "lib/**"]
   }
 }

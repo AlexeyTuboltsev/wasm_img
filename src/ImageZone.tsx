@@ -1,5 +1,8 @@
-import * as styles from "./App.module.scss";
 import * as React from "react";
+
+import { CropZone } from "./CropZone";
+
+import * as styles from "./ImageZone.module.scss";
 
 interface IImageZone {
   file: any;
@@ -12,7 +15,8 @@ interface IImageZone {
   } else {
     return (
       <div className={styles.image}>
-        {wasm.greet()}
+        {file && console.log(wasm.get_length(file))}
+        {file && <CropZone />}
         {file &&
         <img src={file} alt="" />}
       </div>

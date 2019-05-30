@@ -21,8 +21,8 @@ export class ImageZoneLoader extends React.Component<IImageZoneLoaded> {
       this.setState({wasm})
     }).catch(e => console.log(e))
   }
-
   render() {
+  console.log("bla")
     return this.state.wasm
       ? <ImageZone file={this.props.file} loading={this.props.loading} wasm={this.state.wasm}/>
       : null

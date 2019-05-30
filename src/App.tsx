@@ -20,7 +20,6 @@ export class App extends React.Component {
   fileReader = this.initFileReader()
 
   loadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files && e.target.files[0])
     if (e.target.files && e.target.files[0]) {
       this.fileReader.readAsDataURL(e.target.files[0])
     }
