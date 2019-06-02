@@ -8,7 +8,9 @@ export class App extends React.Component {
   initFileReader = () => {
     const reader = new FileReader();
     reader.onloadstart = () => this.setState({ loading: true })
-    reader.onload = (readEvent: any) => this.setState({ loading: false, file: readEvent.target.result })
+    reader.onload = (readEvent: any) => {
+      this.setState({ loading: false, file: readEvent.target.result })
+    }
     return reader
   }
 
@@ -21,9 +23,10 @@ export class App extends React.Component {
 
   loadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      this.fileReader.readAsDataURL(e.target.files[0])
+      this.fileReader.readAsArrayBuffer(e.target.files[0])
     }
   }
+
 
   render() {
     return (
@@ -31,9 +34,9 @@ export class App extends React.Component {
         <input type="file" id="real-input" onChange={(e) => this.loadFile(e)} />
         {this.state.loading.toString()}
         <span className={styles.fileInfo}>Upload a file</span>
-        <React.Suspense fallback={<>loading component...</>}>
+        {/*<React.Suspense fallback={<>loading component...</>}>*/}
           <ImageZoneLoader file={this.state.file} loading={this.state.loading} />
-        </React.Suspense>
+        {/*</React.Suspense>*/}
       </div>
     )
   }

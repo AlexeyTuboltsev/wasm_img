@@ -20,18 +20,18 @@ export class CropZone extends React.Component<ICropZoneProps, ICropZoneState> {
     p2: [5, 5]
   }
 
-  setCursor = (e: any) => {
-    if(this.cropBoxRef.current){
-      const bounds = this.cropBoxRef.current.getBoundingClientRect()              // todo debounce
-      const cursorCoordinates = [e.clientX - bounds.left, e.clientY - bounds.top] //todo cap values
-    console.log(bounds, cursorCoordinates)
-    }
-  }
+  // setCursor = (e:any) => {
+  //   if(this.cropBoxRef.current){
+      // const bounds = this.cropBoxRef.current.getBoundingClientRect()              // todo debounce
+      // const cursorCoordinates = [e.clientX - bounds.left, e.clientY - bounds.top] //todo cap values
+      // console.log(bounds, cursorCoordinates)
+  //   }
+  // }
 
   render() {
     return (<div
         ref={this.cropBoxRef}
-        onMouseMove={(e: any) => this.setCursor(e)}
+        // onMouseMove={(e: any) => this.setCursor(e)}
 
         style={{
           left: `${this.state.p1[0]}%`,
